@@ -1,0 +1,116 @@
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\bin\Debug\VAIPHO.exe
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\bin\Debug\VAIPHO.pdb
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\obj\Debug\VAIPHO.Form1.resources
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\obj\Debug\VAIPHO.Properties.Resources.resources
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\obj\Debug\VAIPHO.csproj.GenerateResource.Cache
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\obj\Debug\VAIPHO.exe
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\obj\Debug\VAIPHO.pdb
+C:\Users\Maquina\Documents\Visual Studio 2008\Projects\VAIPHO\VAIPHO\bin\Debug\System.Data.SqlServerCe.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\VAIPHO.exe
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\VAIPHO.pdb
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\System.Data.SqlServerCe.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\obj\Debug\ResolveAssemblyReference.cache
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\obj\Debug\VAIPHO.Form1.resources
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\obj\Debug\VAIPHO.Properties.Resources.resources
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\obj\Debug\VAIPHO.csproj.GenerateResource.Cache
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\obj\Debug\VAIPHO.exe
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\obj\Debug\VAIPHO.pdb
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Status.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Telephony.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Net.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.WindowsMobile.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.WindowsCE.Messaging.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Drawing.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.PocketOutlook.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Configuration.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Windows.Forms.dll
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Status.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.WindowsMobile.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.WindowsCE.Messaging.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Net.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Drawing.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Telephony.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\Microsoft.WindowsMobile.PocketOutlook.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Configuration.xml
+D:\CONGRESOS y presentaciones\GPS\VAIPHO\VAIPHO\VAIPHO\bin\Debug\OpenNETCF.Windows.Forms.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\VAIPHO.Form1.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\VAIPHO.Properties.Resources.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\VAIPHO.csproj.GenerateResource.Cache
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\VAIPHO.exe
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\VAIPHO.pdb
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\VAIPHO.exe
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\VAIPHO.pdb
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\ApplicationAPI.NET.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Status.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Telephony.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Net.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.WindowsMobile.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\System.Data.SqlServerCe.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.WindowsCE.Messaging.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Drawing.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.PocketOutlook.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Configuration.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Windows.Forms.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Status.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.WindowsMobile.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.WindowsCE.Messaging.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Net.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Drawing.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Telephony.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\Microsoft.WindowsMobile.PocketOutlook.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Configuration.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\OpenNETCF.Windows.Forms.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\en\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\bin\Debug\es-ES\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\VAIPHO.Form1.en.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\VAIPHO.Form1.es-ES.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\en\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2\VAIPHO\obj\Debug\es-ES\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\VAIPHO.Form1.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\VAIPHO.Properties.Resources.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\VAIPHO.Form1.en.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\VAIPHO.Form1.es-ES.resources
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\VAIPHO.csproj.GenerateResource.Cache
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\VAIPHO.exe
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\VAIPHO.exe
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\VAIPHO.pdb
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\en\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\es-ES\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\ApplicationAPI.NET.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Status.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Telephony.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Net.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.WindowsMobile.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\System.Data.SqlServerCe.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.WindowsCE.Messaging.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Drawing.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.PocketOutlook.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Configuration.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Windows.Forms.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Status.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.WindowsMobile.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.WindowsCE.Messaging.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Net.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Drawing.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.Telephony.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\Microsoft.WindowsMobile.PocketOutlook.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Configuration.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\bin\Debug\OpenNETCF.Windows.Forms.xml
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\en\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\es-ES\VAIPHO.resources.dll
+C:\Users\Caballero\Documents\Visual Studio 2008\Projects\vaipho2 - copia\VAIPHO\obj\Debug\VAIPHO.pdb

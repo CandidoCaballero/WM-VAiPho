@@ -1,0 +1,222 @@
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using OpenNETCF.Net.NetworkInformation;
+
+namespace VAIPHO
+{
+    class Hardware
+    {
+        [DllImport("ossvcs.dll", EntryPoint = "#276", CharSet = CharSet.Unicode)]
+        private static extern uint GetWirelessDevice(ref IntPtr pDevice, int pDevVal);
+
+        [DllImport("ossvcs.dll", EntryPoint = "#273", CharSet = CharSet.Unicode)]
+        private static extern uint ChangeRadioState(ref RDD pDevice, int dwState, int saveAction);
+
+        [DllImport("ossvcs.dll", EntryPoint = "#280", CharSet = CharSet.Unicode)]
+        private static extern uint FreeDeviceList(IntPtr pDevice);
+
+        [StructLayout(LayoutKind.Auto)]
+        struct RADIODEVSTATE
+        {
+            public const int RADIODEVICES_ON = 1;
+            public const int RADIODEVICES_OFF = 0;
+        }
+
+        [StructLayout(LayoutKind.Auto, CharSet = CharSet.Unicode)]
+        struct RADIODEVTYPE
+        {
+            public const int RADIODEVICES_MANAGED = 1;
+            public const int RADIODEVICES_PHONE = 2;
+            public const int RADIODEVICES_BLUETOOTH = 3;
+        }
+
+        [StructLayout(LayoutKind.Auto, CharSet = CharSet.Unicode)]
+        struct SAVEACTION
+        {
+            public const int RADIODEVICES_DONT_SAVE = 0;
+            public const int RADIODEVICES_PRE_SAVE = 1;
+            public const int RADIODEVICES_POST_SAVE = 2;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        struct RDD
+        {
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string pszDeviceName;
+
+            [MarshalAs(UnmanagedType.LPTStr)]
+            public string pszDisplayName;
+
+            public uint dwState;
+            public uint dwDesired;
+            public int DeviceType;
+            public IntPtr pNext;
+        }
+
+        public bool SetDeviceState(int dwDevice, int dwState)
+        {
+            IntPtr pDevice = new IntPtr(0);
+            RDD device;
+            uint result;
+            //Get the first wireless device
+            result = GetWirelessDevice(ref pDevice, 0);
+            if (result != 0)
+                return false;
+
+            //If the first device has been found
+            if (pDevice != null)
+            {
+                //While we're still looking at wireless devices
+                while (pDevice != IntPtr.Zero)
+                {
+                    //Marshall the pointer into a C# structure
+                    device = (RDD)System.Runtime.InteropServices.Marshal.PtrToStructure(pDevice, typeof(RDD));
+
+                    //If this device is the device we're looking for
+                    if (device.DeviceType == dwDevice)
+                    {
+                        //Change the state of the radio
+                        result = ChangeRadioState(ref device, dwState, SAVEACTION.RADIODEVICES_PRE_SAVE);
+                    }
+                    //Set the pointer to the next device in the linked list
+                    pDevice = device.pNext;
+                }
+                //Free the list of devices
+                FreeDeviceList(pDevice);
+            }
+            //Turning off radios doesn't correctly report the status, so return true anyway.
+            if (result == 0 || dwState == RADIODEVSTATE.RADIODEVICES_OFF)
+                return true;
+
+            return false;
+        }
+
+        public bool PhoneOn()
+        {
+            //Phone
+            if (SetDeviceState(RADIODEVTYPE.RADIODEVICES_PHONE, RADIODEVSTATE.RADIODEVICES_ON))
+            {
+                return true;
+                //MessageBox.Show("Enabled all radios successfully");
+            }
+            else
+            {
+                return false;
+                //   MessageBox.Show("Enable all radios not successful");
+            }
+        }
+
+        public bool WifiOn()
+        {
+            //WIFI
+            if (SetDeviceState(RADIODEVTYPE.RADIODEVICES_MANAGED, RADIODEVSTATE.RADIODEVICES_ON))
+            {
+                return true;
+                //MessageBox.Show("Enable Wifi successfully");
+            }
+            else
+            {
+                return false;
+                // MessageBox.Show("Enable Wifi not successful");
+            }
+        }
+
+        public bool BluetoothOn()
+        {
+            //Bluethoot
+            if (SetDeviceState(RADIODEVTYPE.RADIODEVICES_BLUETOOTH, RADIODEVSTATE.RADIODEVICES_ON))
+            {
+                return true;
+                // MessageBox.Show("Enabled Bluetooth successfully");
+            }
+            else
+            {
+                return false;
+                // MessageBox.Show("Enable Bluetooth not successful");
+            }
+        }
+
+        public bool WifiOff()
+        {
+            //WIFI
+            if (SetDeviceState(RADIODEVTYPE.RADIODEVICES_MANAGED, RADIODEVSTATE.RADIODEVICES_OFF))
+            {
+                return true;
+                // MessageBox.Show("Disabled all radios successfully");
+            }
+            else
+            {
+                return false;
+                // MessageBox.Show("Disable all radios not successful");
+            }
+        }
+
+        public bool BluetoothOff()
+        {
+            //Bluetooth
+            if (SetDeviceState(RADIODEVTYPE.RADIODEVICES_BLUETOOTH, RADIODEVSTATE.RADIODEVICES_OFF))
+            {
+                return true;
+                // MessageBox.Show("Disabled all radios successfully");
+            }
+            else
+            {
+                return false;
+                //MessageBox.Show("Disable all radios not successful");
+            }
+        }
+
+        public bool PhoneOff()
+        {
+            //Phone
+            if (SetDeviceState(RADIODEVTYPE.RADIODEVICES_PHONE, RADIODEVSTATE.RADIODEVICES_OFF))
+            {
+                return true;
+                // MessageBox.Show("Disabled all radios successfully");
+            }
+            else
+            {
+                return false;
+                //  MessageBox.Show("Disable all radios not successful");
+            }
+        }
+
+        public bool conectawifi(string wifi)
+        {
+            INetworkInterface[] nIntarfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (NetworkInterface ni in nIntarfaces)
+            {
+                if (ni is WirelessZeroConfigNetworkInterface)
+                {
+                    WirelessZeroConfigNetworkInterface wzc = (WirelessZeroConfigNetworkInterface)ni;
+
+
+                    bool b;
+                    b = wzc.AddPreferredNetwork(wifi, false, "", 1, AuthenticationMode.Open, WEPStatus.WEPDisabled, null);
+                    if (b)
+                    {
+                        wzc.ConnectToPreferredNetwork(wifi);
+                        wzc.Bind();
+                        //MessageBox.Show("VAiPho Success.");
+                        return true;
+                    }
+                }
+                else
+                {
+                    // MessageBox.Show(ni.Name + " Not WZC");
+
+                }
+            }
+            return false;
+        }
+
+    }
+}

@@ -1,0 +1,240 @@
+﻿namespace VAIPHO
+{
+    partial class Form1
+    {
+        /// <summary>
+        /// Variable del diseñador requerida.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.MainMenu mainMenu1;
+
+        /// <summary>
+        /// Limpiar los recursos que se estén usando.
+        /// </summary>
+        /// <param name="disposing">true si los recursos administrados se deben eliminar; en caso contrario, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Código generado por el Diseñador de Windows Forms
+
+        /// <summary>
+        /// Método necesario para admitir el Diseñador. No se puede modificar
+        /// el contenido del método con el editor de código.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.mainMenu1 = new System.Windows.Forms.MainMenu();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.txtLog = new System.Windows.Forms.TextBox();
+            this.Play = new System.Windows.Forms.PictureBox();
+            this.labelSpeed = new System.Windows.Forms.Label();
+            this.labelIP = new System.Windows.Forms.Label();
+            this.labelPseu = new System.Windows.Forms.Label();
+            this.publicidad = new System.Windows.Forms.PictureBox();
+            this.sygic = new System.Windows.Forms.PictureBox();
+            this.autenticados = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.Pause = new System.Windows.Forms.PictureBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // mainMenu1
+            // 
+            this.mainMenu1.MenuItems.Add(this.menuItem1);
+            this.mainMenu1.MenuItems.Add(this.menuItem2);
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.Text = "Cerrar";
+            this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
+            // 
+            // menuItem2
+            // 
+            this.menuItem2.Text = "Limpiar";
+            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
+            // 
+            // txtLog
+            // 
+            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLog.Location = new System.Drawing.Point(0, 148);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtLog.Size = new System.Drawing.Size(238, 119);
+            this.txtLog.TabIndex = 2;
+            // 
+            // Play
+            // 
+            this.Play.Image = ((System.Drawing.Image)(resources.GetObject("Play.Image")));
+            this.Play.Location = new System.Drawing.Point(2, 17);
+            this.Play.Name = "Play";
+            this.Play.Size = new System.Drawing.Size(41, 41);
+            this.Play.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.Play.Click += new System.EventHandler(this.Play_Click);
+            // 
+            // labelSpeed
+            // 
+            this.labelSpeed.BackColor = System.Drawing.Color.Transparent;
+            this.labelSpeed.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.labelSpeed.Location = new System.Drawing.Point(189, 2);
+            this.labelSpeed.Name = "labelSpeed";
+            this.labelSpeed.Size = new System.Drawing.Size(40, 16);
+            this.labelSpeed.Text = "0.0";
+            // 
+            // labelIP
+            // 
+            this.labelIP.BackColor = System.Drawing.Color.Transparent;
+            this.labelIP.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.labelIP.Location = new System.Drawing.Point(81, 2);
+            this.labelIP.Name = "labelIP";
+            this.labelIP.Size = new System.Drawing.Size(102, 16);
+            this.labelIP.Text = "0.0.0.0";
+            // 
+            // labelPseu
+            // 
+            this.labelPseu.BackColor = System.Drawing.Color.Transparent;
+            this.labelPseu.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.labelPseu.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.labelPseu.Location = new System.Drawing.Point(0, 1);
+            this.labelPseu.Name = "labelPseu";
+            this.labelPseu.Size = new System.Drawing.Size(56, 16);
+            this.labelPseu.Text = "pseu";
+            // 
+            // publicidad
+            // 
+            this.publicidad.Image = ((System.Drawing.Image)(resources.GetObject("publicidad.Image")));
+            this.publicidad.Location = new System.Drawing.Point(92, 106);
+            this.publicidad.Name = "publicidad";
+            this.publicidad.Size = new System.Drawing.Size(41, 41);
+            this.publicidad.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.publicidad.Click += new System.EventHandler(this.publicidad_Click);
+            // 
+            // sygic
+            // 
+            this.sygic.BackColor = System.Drawing.Color.Transparent;
+            this.sygic.Image = ((System.Drawing.Image)(resources.GetObject("sygic.Image")));
+            this.sygic.Location = new System.Drawing.Point(139, 106);
+            this.sygic.Name = "sygic";
+            this.sygic.Size = new System.Drawing.Size(41, 41);
+            this.sygic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.sygic.Click += new System.EventHandler(this.sygic_Click_1);
+            // 
+            // autenticados
+            // 
+            this.autenticados.BackColor = System.Drawing.Color.Transparent;
+            this.autenticados.Image = ((System.Drawing.Image)(resources.GetObject("autenticados.Image")));
+            this.autenticados.Location = new System.Drawing.Point(186, 106);
+            this.autenticados.Name = "autenticados";
+            this.autenticados.Size = new System.Drawing.Size(41, 41);
+            this.autenticados.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.autenticados.Click += new System.EventHandler(this.autenticados_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.Play);
+            this.panel1.Controls.Add(this.labelPseu);
+            this.panel1.Controls.Add(this.labelIP);
+            this.panel1.Controls.Add(this.labelSpeed);
+            this.panel1.Controls.Add(this.pictureBox2);
+            this.panel1.Location = new System.Drawing.Point(-1, 89);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(241, 64);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(1, 18);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(41, 41);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            // 
+            // Pause
+            // 
+            this.Pause.Image = ((System.Drawing.Image)(resources.GetObject("Pause.Image")));
+            this.Pause.Location = new System.Drawing.Point(46, 106);
+            this.Pause.Name = "Pause";
+            this.Pause.Size = new System.Drawing.Size(41, 41);
+            this.Pause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.Pause.Click += new System.EventHandler(this.Pause_Click_1);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(-1, 81);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(241, 10);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(0, -16);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(240, 157);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScroll = true;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(240, 268);
+            this.ControlBox = false;
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.Pause);
+            this.Controls.Add(this.autenticados);
+            this.Controls.Add(this.sygic);
+            this.Controls.Add(this.publicidad);
+            this.Controls.Add(this.txtLog);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pictureBox3);
+            this.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Menu = this.mainMenu1;
+            this.Name = "Form1";
+            this.Text = "VAnet In PHOne";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.panel1.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.PictureBox Play;
+        private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.Label labelSpeed;
+        private System.Windows.Forms.Label labelIP;
+        private System.Windows.Forms.Label labelPseu;
+        private System.Windows.Forms.PictureBox publicidad;
+        private System.Windows.Forms.PictureBox sygic;
+        private System.Windows.Forms.PictureBox autenticados;
+        private System.Windows.Forms.PictureBox Pause;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Panel panel1;
+    }
+}
+

@@ -1,0 +1,432 @@
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Threading;
+
+using System.Net;
+using Microsoft.Win32;
+using Microsoft.WindowsMobile.Status;
+
+using ApplicationAPI;//PARA POI
+
+//using System.Net.Sockets;
+
+namespace VAIPHO
+{
+    public partial class Form1 : Form
+    {
+        public delegate void AddListItem(String myItem);
+        public AddListItem myDelegate;
+        public AddListItem myDelegate2;
+        public AddListItem myDelegate3;
+        public AddListItem myDelegate4;
+        public AddListItem myDelegate5;
+      //  public AddListItem myDelegate6;
+      
+        public Boolean cerrar = false;
+        private System.Windows.Forms.Timer timer1 = new System.Windows.Forms.Timer();
+       // public static int atascado;
+               
+        const string registryKey = @"HKEY_LOCAL_MACHINE\System\State\Hardware"; //para detectar apagado de bluetooth
+        const string registryValueName = @"Bluetooth"; 
+        const string applicationFileName = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\Drive\\WindowsMobile\\Drive.exe";
+        const string applicationImages = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\images\\";
+        
+        Microsoft.WindowsMobile.Status.RegistryState rg;
+        
+
+        public Form1()
+        {
+            InitializeComponent();
+            myDelegate = new AddListItem(AddListItemMethod);
+            myDelegate2 = new AddListItem(AddVelocidad);
+            myDelegate3 = new AddListItem(AddPosicion);
+            myDelegate4 = new AddListItem(AddIp);
+            myDelegate5 = new AddListItem(AddPseu);
+         //   myDelegate6 = new AddListItem(PlayEnabled);
+            // myDelegate4 = new AddListItem(AddInfo);            
+        }
+        
+        private void Play_Click(object sender, EventArgs e)//Iniciamos aplicacion
+        {
+            cerrar = false;
+            Invoke(myDelegate, new Object[] { "Loading... Please Wait." });
+            Play.Enabled = false;//DESABILITO PLAY
+
+            //Habilitamos hardware
+            Hardware detect = new Hardware();
+            if (detect.BluetoothOn())//habilita bluetooth
+                Invoke(myDelegate, new Object[] { "Enabled Bluetooth successfully." });
+            if (detect.WifiOn())// habilita wifi
+                Invoke(myDelegate, new Object[] { "Enabled Wifi successfully." });
+            if (detect.conectawifi("vaipho"))//conecta a la red vaipho
+                Invoke(myDelegate, new Object[] { "VAiPho conected successfully." });
+
+            //Si el manos libres del coche se apaga, VAiPho se apagará también (para evitar atascos inexistentes)          
+            int key = (int)Registry.GetValue(registryKey, "Bluetooth", -1);
+            rg = new RegistryState(registryKey, registryValueName);
+            rg.Changed += new ChangeEventHandler(bluetooth_Changed);
+
+           
+            //LA CREACION DE LA BD NO SE DEBE EJECUTAR EN LA VERSIÓN FINAL
+            Invoke(myDelegate, new Object[] { "Generating DB." });
+            BD basededatos = new BD(this);
+            //if (basededatos.crearBD())
+                if (basededatos.crearTablas())
+                {
+                    Server Servidor = new Server(this);//, 9050);                                   
+                    Cliente Cliente1 = new Cliente(this, "9050");
+                    string hostName = Dns.GetHostName();
+                    IPHostEntry thisHost = Dns.GetHostEntry(hostName);
+                    label6.Text = thisHost.AddressList[0].ToString();
+                    label7.Text = basededatos.recuperamyPseu();
+                    Thread hiloCliente = new Thread(new ThreadStart(Cliente1.beacon));
+                    hiloCliente.Start();
+                    DetectaIncidente VigilaCarretera = new DetectaIncidente(this);//Aquí dentro se lleva a cabo todo lo de detectarIncidentes
+                    VigilaCarretera.DetectaIncidenteStart();
+                    VigilaCarretera.posibleparking(this);//señala un posible aparcamiento(al encenderse el servicio)                    
+                    /*Prueba VigilaCarretera = new Prueba(this);
+                    VigilaCarretera.DetectaIncidenteStart();*/
+                }
+            
+        }
+         
+        void bluetooth_Changed(object sender, ChangeEventArgs args)
+        {
+            //Encendemos la PDA en caso de que se encienda o apague el BT 
+            string rgValue = rg.CurrentValue.ToString();
+            switch (rgValue)
+            {
+                case "8": // accion = "BlueTooth Off";                  
+                    break;
+                case "9":// accion = "BlueTooth On";                   
+                    //desconectamos aplicación VAiPho (si está encendida)
+                    cerrar = true;
+                    Invoke(myDelegate, new Object[] { "Stop Services." });
+                    Cliente cierracliente = new Cliente(this, "9050");//,"127.0.0.1","bye");
+                    cierracliente.respuesta("01", "Pause", "-", "127.0.0.1");//,
+                    Play.Enabled = true;
+                    //¿apagamos todo??
+                    try
+                    {
+                        DriveHandler.EndApplication(0);
+                        DriveHandler.CloseApi();
+                    }
+                    catch
+                    {
+                        Invoke(myDelegate, new Object[] { "Error closing GPS navigator." });
+                    }
+                    Hardware detect = new Hardware();
+                    detect.WifiOff();
+                    Close();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+<<<<<<< .mine
+
+
+        /* private void detectaIncidente_Tick(object sender, EventArgs e)
+        {
+           SError err;
+            SGpsPosition gps;
+            SRoadInfo road;
+            int speedLimit;
+            string direccionTJam;
+            // LONGPOSITION posTJam;
+
+            string text = "";// "Current position:\r\n\t";
+            string text2 = "";// "Current speed:\r\n\t";//VELOCIDAD ACTUAL
+            string text3 = "GPS Time:\r\n\t";//HORA GPS
+            string text4 = "Condition:\r\n\t";//ATASCO
+
+            //  if (gps.Speed() <= 20) { }
+            if (CApplicationAPI.GetActualGpsPosition(out err, out gps, false, 1000) == 1)
+            {
+                LONGPOSITION position = new LONGPOSITION(gps.Longitude, gps.Latitude);
+                CApplicationAPI.MetersToWorldDegree(ref position);
+                double longitude = position.lX / 100000.0;
+                double latitude = position.lY / 100000.0;
+                text += longitude + "°," + latitude + "°";
+                text2 += gps.Speed + "km/h"; //VELOCIDAD ACTUAL
+                text3 += gps.Time + "hora" + gps.Date + "fecha";//HORA Y FECHA 
+                // CApplicationAPI.
+ 
+                   // CApplicationAPI.
+                // if (ApplicationAPI.SRoadInfo(out err, position, out direccionTJam, out road, 1000)==1)
+                try
+                {
+                    //  CApplicationAPI.get
+                    if (CApplicationAPI.GetCurrentSpeedLimit(out err, out speedLimit, 1000) == 1)
+                        // {
+                        if ((gps.Speed >= 0) && (gps.Speed < (speedLimit / 4))) // gps.Speed < 4))//                  
+                        {// SI SE ESTA QUIETO DURANTE UN TIEMPO, ATASCO
+                            if (atascado == 0)
+                            {
+                                text4 += "Posible atasco";
+                                Invoke(myDelegate, new Object[] { text4 });
+                            }
+                            atascado++;
+                            if (atascado == 40)
+                            {//En caso de detectar atasco, coger información de la vía, añadirlo en el gps, enviar para que firmen 
+                                STmcEvent STmcev=new STmcEvent();
+                                STmcev.nEventCode=(int)STmcEvent.EventCode.TMCCongestion;
+                                STmcev.lX=gps.Longitude;
+                                STmcev.lY=gps.Latitude;
+                                STmcev.nValidityDay=(byte)DateTime.Now.Day;
+                                STmcev.nValidityHour = (byte)DateTime.Now.Hour;
+                                STmcev.nValidityMinute = (byte)DateTime.Now.Minute;
+                                STmcev.nValidityMonth = (byte)DateTime.Now.Month;
+                                STmcev.nValidityYear = (byte)DateTime.Now.Year;
+                                STmcev.bUserAvoid=0;
+                                
+                                Cliente mycliente = new Cliente(this, "9050");
+                                string dirimconges = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\congestion3.bmp";
+                                int IDbitmap;
+
+                                string hostName = Dns.GetHostName();
+                                IPHostEntry thisHost = Dns.GetHostEntry(hostName);
+                                string thisIpAddr = thisHost.AddressList[0].ToString();
+                                //En caso de atasco enviamos señal
+                                if (CApplicationAPI.AddBitmapToMap(out err, dirimconges, gps.Longitude, gps.Latitude, out IDbitmap, 1000) == 1)
+                                    mycliente.respuesta("T1",Server.myPseudonimo,gps.Longitude+";"+gps.Latitude+";"+DateTime.Now,thisIpAddr);
+                                if (  CApplicationAPI.AddTMCEvent(out err, ref STmcev, 1000)== 1)
+                                // {
+                                if (CApplicationAPI.FlashMessage(out err, "Posible atasco", true, 1000) == 1)
+                                    Invoke(myDelegate, new Object[] { "Add event: " });
+                                // }
+
+                                if (CApplicationAPI.GetLocationInfo(out err, position, out direccionTJam, 0) == 1)
+                                    // Invoke(myDelegate, new Object[] { direccionTJam });
+
+                                    Invoke(myDelegate, new Object[] { "Atasco en: " + direccionTJam });
+                                atascado = 0;
+                            }
+                        }
+                        else
+                        {
+                            atascado = 0;
+                        }
+                }
+                catch (Exception p)
+                {
+
+                    Invoke(myDelegate, new Object[] { "error: " + p.Message });
+                }
+
+            }
+            else
+            {
+                text += err.GetDescription();
+                text2 += err.GetDescription(); //VELOCIDAD ACTUAL
+                text3 += err.GetDescription(); //GPS FECHA
+                text4 += err.GetDescription();
+            }
+            label4.Text = text2;
+            label5.Text = text; //VELOCIDAD ACTUAL      
+            label3.Text = text3; //VELOCIDAD ACTUAL    
+           label4.Text = text4;
+
+            //limite de velocidad
+            //SChangeOption
+        }*/
+
+
+=======
+       
+>>>>>>> .r66
+        public void AddListItemMethod(String myItem)
+        {
+            txtLog.Text = myItem + "\r\n" + txtLog.Text;
+        }
+
+        public void AddVelocidad(String myItem)
+        {
+            label4.Text = myItem;
+        }
+
+        public void AddPosicion(String myItem)
+        {
+            label5.Text = myItem;
+        }
+
+        public void AddIp(String myItem)
+        {
+            label6.Text = myItem;
+        }
+
+        public void AddPseu(String myItem)
+        {
+            label7.Text = myItem;
+        }
+
+       /* public void PlayEnabled( bool habilitar)
+        {
+            Play.Enabled = habilitar;
+        }*/
+
+        /* public void AddInfo(String myItem)
+         {
+             label7.Text = myItem;
+         }*/
+
+        private void menuItem1_Click(object sender, EventArgs e)
+        {
+            cerrandoAplicacion();
+            Close();
+        }
+                
+        private void menuItem2_Click(object sender, EventArgs e)
+        {
+            txtLog.Text = "";//borramos la pantalla
+        }
+
+        private void Pause_Click(object sender, EventArgs e)//Paramos aplicación
+        {
+            pausandoServicios();
+            Play.Enabled = true;
+        }
+
+        private void pausandoServicios()//Paramos aplicación
+        {
+            cerrar = true;
+            Invoke(myDelegate, new Object[] { "Stop Services." });
+            Cliente cierracliente = new Cliente(this, "9050");//,"127.0.0.1","bye");
+            cierracliente.respuesta("01", Server.myPseudonimo, "-", "127.0.0.1");//,
+           // PlayEnabled(true);
+        }
+
+        private void cerrandoAplicacion()//Cerramos aplicación y GPS
+        {
+            try
+            {
+                DriveHandler.EndApplication(0);
+                DriveHandler.CloseApi();
+                Hardware detect = new Hardware();
+                detect.WifiOff();               
+            }
+            catch
+            {
+                //    Formulario.Invoke(Formulario.myDelegate, new Object[] { "Error software GPS: " + e.Message });
+            }            
+        }
+
+        public void compruebaBateria()
+        {
+            BatteryLevel batteryId = Microsoft.WindowsMobile.Status.SystemState.PowerBatteryStrength;
+            if (batteryId.ToString().Equals("VeryLow") || batteryId.ToString().Equals("Low"))//si la bateria no está baja lanzamos vaipho
+            {
+                pausandoServicios();
+                cerrandoAplicacion();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)//Muestra usuarios autenticados
+        {
+            BD DButiles = new BD(this);
+            DButiles.mostrarAutenticados();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Cliente clientePubli = new Cliente(this, "9050");
+            Cripto criputiles = new Cripto();
+            BD DButiles = new BD(this);
+            Invoke(myDelegate, new Object[] { "Sending advertisements." });
+<<<<<<< .mine
+            DButiles.insertarEvento("P1", -1631975, 2848146, DateTime.Now); //-1538936, 2786108, DateTime.Now);//Arinaga
+            clientePubli.respuesta("P1", Server.myPseudonimo, criputiles.Encrypt("-16320899;28482309;" + DateTime.Now, DButiles.recuperamySK()), IPAddress.Broadcast.ToString());//,
+       
+            //AÑADIENDO POIs
+            SError err;
+            SPoi poi;
+            string dirImagen;// = @"el-corte-ingles.bmp";//;"1_favo_4.bmp";// "1_friend_car.bmp";// "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\aparcamiento.bmp";//Res\\icons\\poi\\1_favo_3.bmp";
+            
+            //int res = CApplicationAPI.DeletePoiCategory(out err, "Posible Plaza", "ESP", 1000);
+             //res = CApplicationAPI.DeletePoiCategory(out err, "P1", "ESP", 1000);
+            dirImagen = @"congestion.bmp";
+            res = CApplicationAPI.AddPoiCategory(out err, "Atasco", dirImagen, "ESP", 1000);
+            dirImagen = @"aparcamiento.bmp";
+            res = CApplicationAPI.AddPoiCategory(out err, "Posible Plaza", dirImagen, "ESP", 1000);
+            dirImagen = @"el-corte-ingles.bmp";
+            res = CApplicationAPI.AddPoiCategory(out err, "Comercio", dirImagen, "ESP", 1000);
+            Invoke(myDelegate, new Object[] { "El resultado de anadir una categoria es: " + err.GetDescription() });
+            //res = CApplicationAPI.LocationFromAddress(out err, out position, "SVK,Bratislava,Zochova,1", false, false, 0);
+            LONGPOSITION position = new LONGPOSITION(-1631975, 2848146);//X, Y);           
+            poi = new SPoi(position, "Comercio", "New POI", 1000);
+            res = CApplicationAPI.AddPoi(out err, ref poi, 1000);
+            Invoke(myDelegate, new Object[] { "El resultado de anadir un poi es: " + err.GetDescription() });
+           // res= CApplicationAPI.DeletePoi(out err, poi, 0);
+
+=======
+            DButiles.insertarEvento("P1", "","",-1538936, 2786108, 0.0,DateTime.Now,"");
+            clientePubli.respuesta("P1", Server.myPseudonimo, criputiles.Encrypt("-1538936;2786108;" + DateTime.Now, DButiles.recuperamySK()), IPAddress.Broadcast.ToString());//,
+>>>>>>> .r66
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DriveHandler.SendDriveToForeground(30);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {           
+            cerrar = false;
+            Invoke(myDelegate, new Object[] { "Loading... Please Wait." });
+            Play.Enabled = false;//DESABILITO PLAY
+
+            Hardware detect = new Hardware();
+            if (detect.BluetoothOn())//habilita bluetooth
+                Invoke(myDelegate, new Object[] { "Enabled Bluetooth successfully." });
+            if (detect.WifiOn())// habilita wifi
+                Invoke(myDelegate, new Object[] { "Enabled Wifi successfully." });
+            if (detect.conectawifi("vaipho"))//conecta a la red vaipho
+                Invoke(myDelegate, new Object[] { "VAiPho conected successfully." });
+
+            //Si el manos libres del coche se apaga, VAiPho se apagará también (para evitar atascos inexistentes)          
+            int key = (int)Registry.GetValue(registryKey, "Bluetooth", -1);
+            rg = new RegistryState(registryKey, registryValueName);
+            rg.Changed += new ChangeEventHandler(bluetooth_Changed);
+           
+
+            //LA CREACION DE LA BD NO SE DEBE EJECUTAR EN LA VERSIÓN FINAL
+            Invoke(myDelegate, new Object[] { "Generating DB." });
+            BD basededatos = new BD(this);
+
+           /* if (basededatos.crearTablas())//comentar inserts en crear tablas.  
+            {
+                basededatos.creaActualizaBD();
+            }*/
+
+            //if (basededatos.crearBD())
+                if (basededatos.crearTablas())
+                {
+                    Server Servidor = new Server(this);//, 9050);                                   
+                    Cliente Cliente1 = new Cliente(this, "9050");
+                    string hostName = Dns.GetHostName();
+                    IPHostEntry thisHost = Dns.GetHostEntry(hostName);
+                    label6.Text = thisHost.AddressList[0].ToString();
+                    label7.Text = basededatos.recuperamyPseu();
+                    Thread hiloCliente = new Thread(new ThreadStart(Cliente1.beacon));
+                    hiloCliente.Start();
+                    DetectaIncidente VigilaCarretera = new DetectaIncidente(this);
+                    VigilaCarretera.DetectaIncidenteStart();
+                    VigilaCarretera.posibleparking(this);
+                    /*Prueba VigilaCarretera = new Prueba(this);
+                    VigilaCarretera.DetectaIncidenteStart();*/
+                }
+
+             
+        }
+
+
+
+    }
+}

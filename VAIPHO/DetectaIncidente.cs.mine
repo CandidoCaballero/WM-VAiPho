@@ -1,0 +1,303 @@
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using Microsoft.Win32;
+using ApplicationAPI;
+
+using System.Net;//para parking
+
+namespace VAIPHO
+{
+    class DetectaIncidente
+    {
+        public Form1 Formulario;
+
+
+
+        public DetectaIncidente(Form1 formu)
+        {
+            Formulario = formu;
+            //Se crea un hilo que estará constantemente detectando los incidentes en la carretera
+            Thread HiloTick = new Thread(new ThreadStart(vigila));
+            HiloTick.Start();
+
+        }
+        /*Función que cada cierto tiempo va */
+        private void vigila()
+        {
+          //  int velocidad, X, Y;
+            //bool atasco;
+             SError err;
+             SGpsPosition gps;
+            // SRoadInfo road;
+             int speedLimit,atascado=0;
+             string direccionTJam;
+             // LONGPOSITION posTJam;
+
+             string text = "";// "Current position:\r\n\t";
+             string text2 = "";// "Current speed:\r\n\t";//VELOCIDAD ACTUAL
+             string text3 = "GPS Time:\r\n\t";//HORA GPS
+             string text4 = "Condition:\r\n\t";//ATASCO
+            
+            if(DriveHandler.StartDrive("\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\Drive\\WindowsMobile\\Drive.exe", new int[] { 0, 0, 0, 0 }) == 1)//20, 60, 320, 240 }) == 1)
+            {
+                DriveHandler.SendDriveToBackground(10);
+                //Hilo que está todo el tiempo detectando posibles atascos.
+                while (!Formulario.cerrar)
+                {
+                    //Se obtiene información de posición gps y velocidad de circulación
+                    if (CApplicationAPI.GetActualGpsPosition(out err, out gps, false, 1000) == 1)
+                    {
+                        LONGPOSITION position = new LONGPOSITION(gps.Longitude, gps.Latitude);
+                        CApplicationAPI.MetersToWorldDegree(ref position);
+                        double longitude = position.lX / 100000.0;
+                        double latitude = position.lY / 100000.0;
+                        text = longitude + "°," + latitude + "°";
+                        Formulario.Invoke(Formulario.myDelegate3, new Object[] { text });
+                        text2 = gps.Speed + "km/h"; //VELOCIDAD ACTUAL
+                        Formulario.Invoke(Formulario.myDelegate2, new Object[] { text2 });
+                        text3 = gps.Time + "hora" + gps.Date + "fecha";//HORA Y FECHA 
+                       
+                        // if (ApplicationAPI.SRoadInfo(out err, position, out direccionTJam, out road, 1000)==1)
+                        try
+                        {
+                            //Se obtiene la velocidad límite de la vía
+                            if (CApplicationAPI.GetCurrentSpeedLimit(out err, out speedLimit, 1000) == 1)
+                                // {
+                                //Si estamos cin una vía y la velocidad de circulación es considereblemente inferior
+                                //a la velocidad normal de la via marcamos un posible atasco
+                                if ((gps.Speed >= 0)) //&& (gps.Speed < (speedLimit / 4))) // gps.Speed < 4))//                  
+                                {
+                                    //Mostramos la velocidad límite de la vía
+                                    string velocidadlimite = speedLimit.ToString();
+                                    Formulario.Invoke(Formulario.myDelegate3, new Object[] { velocidadlimite });
+
+                                    if (atascado == 0)
+                                    {
+                                        text4 = "Posible atasco";
+                                         Formulario.Invoke(Formulario.myDelegate, new Object[] { text4 });
+                                    }
+                                    atascado++;
+                                    if (atascado == 40)
+                                    {//En caso de detectar atasco, coger información de la vía, añadirlo en el gps, enviar para que firmen 
+
+                                        //Se muestra en el Mapa que hay un posible atasco
+                                    //    if (CApplicationAPI.FlashMessage(out err, "Possible Traffic Jam", true, 1000) == 1)
+                                      //      Formulario.Invoke(Formulario.myDelegate, new Object[] { "Add event: Traffic Jam" });
+                                       
+                                        //Se recoge el nombre de la vía donde hay atasco
+                                        if (CApplicationAPI.GetLocationInfo(out err, position, out direccionTJam, 0) == 1)
+                                        {     // Invoke(myDelegate, new Object[] { direccionTJam });
+                                            Formulario.Invoke(Formulario.myDelegate, new Object[] { "Traffic Jam in: " + direccionTJam });
+                                        }
+                                        ThreadconParametro hiloParam = new ThreadconParametro(latitude, longitude, Formulario);
+                                            //Se llama a la función encargada de manejar los incidentes y el hilo actual sigue vigilando.
+                                        Thread HiloManejaIncidente = new Thread(new ThreadStart(hiloParam.ManejaIncidente));
+                                        HiloManejaIncidente.Start();
+                                        Thread.Sleep(60 * 1000);
+                                        atascado = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    atascado = 0;
+                                }
+                        }
+                        catch (Exception p)
+                        {
+                            Formulario.Invoke(Formulario.myDelegate, new Object[] { "error: " + p.Message });
+                        }
+
+                    }
+                    else
+                    {
+                        text += err.GetDescription();
+                        text2 += err.GetDescription(); //VELOCIDAD ACTUAL
+                        text3 += err.GetDescription(); //GPS FECHA
+                        text4 += err.GetDescription();
+                    }
+                    //dormimos el hilo un segundo
+                    Thread.Sleep(1000);
+                }
+            }
+        }
+
+
+        public void posibleparking(Form1 formu)
+        {            
+            SError err;
+            SGpsPosition gps;
+            string hostName = Dns.GetHostName();
+            IPHostEntry thisHost = Dns.GetHostEntry(hostName);
+            string thisIpAddr = thisHost.AddressList[0].ToString();
+            Cliente mycliente = new Cliente(formu, "9050");
+            DateTime inicio = DateTime.Now.AddSeconds(10.00);//si en menos de 10.00 segundos detecta la señal gps avisa de posible aparcamiento
+            string auxiliar;
+            Cripto criputiles = new Cripto();
+            BD DButiles = new BD (formu);
+            while (DateTime.Compare(DateTime.Now, inicio) < 0)
+            {
+                try
+                {
+                    if (CApplicationAPI.GetActualGpsPosition(out err, out gps, false, 1000) == 1)
+                    {
+                        formu.Invoke(formu.myDelegate, new Object[] { "Possible parking in: " + gps.Longitude + "," + gps.Latitude });
+                        auxiliar = criputiles.Encrypt(gps.Longitude + ";" + gps.Latitude + ";" + DateTime.Now, DButiles.recuperamySK());
+                        mycliente.respuesta("P2", Server.myPseudonimo,auxiliar , thisIpAddr);
+                        DButiles.insertarEvento("P2", gps.Longitude, gps.Latitude, DateTime.Now);                     
+
+                        break;
+                    }
+                }
+                catch { }
+                Thread.Sleep(1000);
+            }
+        }
+
+        public void addPoi(int X, int Y, string tipo)
+        {
+
+            string dirimconges;
+            if (tipo.Equals("T1"))
+            dirimconges = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\congestion.bmp";//Res\\icons\\poi\\1_favo_3.bmp";
+            else if (tipo.Equals("P1"))
+            dirimconges = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\aparcamiento.bmp";//Res\\icons\\poi\\1_favo_3.bmp";
+            else if (tipo.Equals("P2"))
+            dirimconges = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\Res\\icons\\poi\\1_favo_3.bmp";
+            else
+                dirimconges = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\congestion.bmp";//Res\\icons\\poi\\1_favo_3.bmp";
+
+            string dirSonido = "\\Tarjeta de almacenamiento\\FLEET_MOBILE_14d\\test2.wav";//test.wav";//Res\\icons\\poi\\1_favo_3.bmp";
+                         
+
+           
+            try
+            {
+                WSounds ws = new WSounds();
+                ws.Play(dirSonido, ws.SND_FILENAME | ws.SND_ASYNC);
+
+
+                // Buscar sobre esto para reproducir por bluetooth
+               // WaveOut wo = new WaveOut();
+               // wo.Play(fileName, 512 * 1024, 0xffff, 0xffff);
+
+            }
+            catch (Exception ex)
+            {
+                Formulario.Invoke(Formulario.myDelegate, new Object[] { "Error: " + ex.Message });            
+                //MessageBox.Show(ex.Message + ": " + ex.StackTrace.ToString(), "Error");
+            }
+
+            try
+            {
+                SError err;
+                SPoi poi;
+                LONGPOSITION position = new LONGPOSITION(X, Y);
+                int res = CApplicationAPI.AddPoiCategory(out err, tipo, dirimconges, "ESP", 1000);
+                Formulario.Invoke(Formulario.myDelegate, new Object[] { "El resultado de anadir una categoria es: " + err.GetDescription() });
+                //res = CApplicationAPI.LocationFromAddress(out err, out position, "SVK,Bratislava,Zochova,1", false, false, 0);
+                poi = new SPoi(position, tipo, "New POI", 0);
+                res = CApplicationAPI.AddPoi(out err, ref poi, 0);
+                Formulario.Invoke(Formulario.myDelegate, new Object[] { "El resultado de anadir el POI es: " + err.GetDescription() });
+                int b = res;
+                // CApplicationAPI.AddPoiCategory(out error, strCategory, strBitmapPath, strISOCode, nMaxTime);
+                //int a= CApplicationAPI.AddPoi(out Error, ref Poi ,MaxTime);
+                //Formulario.Invoke(Formulario.myDelegate, new Object[] {"El resultado de aadePOI es "+a+ " "+Error.nCode});
+            }
+            catch { }
+        }
+
+    }
+
+        class ThreadconParametro
+        {
+            private double X;
+            private double Y;
+            public Form1 Formulario;
+
+            public ThreadconParametro(double cx, double cy, Form1 formu)
+            {
+                X = cx;
+                Y = cy;
+                Formulario = formu;
+
+            }
+
+            /* 
+             * Si el incidente no está en la base de datos, se introduce y se manda un mensaje de agregación
+             * Si ya está en la BD no hacemos nada.
+             *       * TipoEvento
+                     * 0.- Atasco
+                     * 1.- Futura funcionalidad
+                     * 2.- Futura funcionalidad 
+             */
+            public void ManejaIncidente()
+            {
+                //OBTIENE HORA ACTUAL
+                DateTime myDateTime = DateTime.Now;
+                //ACCESO A LA BD
+                BD AccesoBD = new BD(Formulario);
+                string evento;
+
+                //Dormimos el hilo actual por si alguien ya inició el envío de este incidente.
+               // Thread.Sleep(1000*60);
+
+                //Se comprueba si ya existe el incidente en las coordenadas X,Y aprox.
+                evento = AccesoBD.ExisteEvento("T1", X, Y);
+                if (!evento.Equals("error"))
+                {
+                    string[] words = evento.Split(',');
+                    //Si no existe el evento o existe pero no es el mismo se introduce en BD 
+                    if (evento.Equals("") || !EnRango(double.Parse(words[0]), double.Parse(words[1])))
+                    {
+                        if (AccesoBD.insertarEvento("T1", X, Y, myDateTime))//0
+                        {
+                            //Se ha insertado correctamente
+                            Formulario.Invoke(Formulario.myDelegate, new Object[] { "The event has been inserted properly in DB" });
+                        }
+                        else
+                        {
+                            Formulario.Invoke(Formulario.myDelegate, new Object[] { "IncidenteV1=>Error insertando evento en BD " });
+                        }
+                        //Si se trata de un nuevo evento se envía un mensaje buscando agregación.
+                        AggregarFirmas.setFirmas();
+                        AggregarFirmas.setNumerofirmas();
+                        AggregarFirmas.setEsperoFirmas();
+                        Formulario.Invoke(Formulario.myDelegate, new Object[] { "Me quedo a la espera de firmas" });
+                        agregacion Agpaq = new agregacion(Formulario, X, Y, myDateTime);
+                        Agpaq.EnviaNuevoPaqueteAgregacion();
+                    }
+                    /*else
+                    {
+
+                        //Si existe el incidente no hacemos nada
+                        Formulario.Invoke(Formulario.myDelegate, new Object[] { "Incident already dealt " });
+                    }*/
+
+
+                }
+
+            }
+
+            private bool EnRango(double CoodX, double CoordY)
+            {
+                //radio del círgulo
+                int r = 100;
+                /* Calculamos la distancia de (X,Y) al centro del círculo (X,Y),
+               que se obtiene como raíz cuadrada de (X-Y)^2+(X-Y)^2 */
+                double d = Math.Sqrt((CoodX - X) * (CoodX - X) + (CoordY - Y) * (CoordY - Y));
+
+                // el círculo contiene el punto si d es menor o igual al radio
+                return d <= r;
+            }
+
+
+
+          
+
+
+        }//class thread con parámetro
+    }
+
